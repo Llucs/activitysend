@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Activity Send</string>
+    <string name="settings">Configurações</string>
+    <string name="back">Voltar</string>
+    <string name="select_file">Selecionar Arquivo</string>
+    <string name="send">Enviar</string>
+    <string name="send_to">Enviar para: %s</string>
+    <string name="github_repository">Repositório GitHub</string>
+    <string name="access_source_code">Acesse o código-fonte do app</string>
+    <string name="version">Versão: %s</string>
+    <string name="no_file_selected">Nenhum arquivo selecionado.</string>
+    <string name="error_sending_file">Erro ao enviar arquivo: %s</string>
+    <string name="shizuku_not_running">Shizuku não está rodando</string>
+    <string name="language">Idioma</string>
+    <string name="system_default">Padrão do Sistema</string>
+    <string name="search_apps">Pesquisar aplicativos (nome ou pacote)</string>
+    <string name="activities_count">%d Atividades</string>
+    <string name="open_app_settings">Abrir Configurações do App</string>
+    <string name="search_activities">Pesquisar atividades</string>
+    <string name="version_format">Versão: %s</string>
+    <string name="enable_root_mode">Ativar Modo Root</string>
+    <string name="enable_shizuku_mode">Ativar Modo Shizuku</string>
+    <string name="root_mode_description">Permite acesso avançado com permissões de superusuário.</string>
+    <string name="shizuku_mode_description">Permite acesso avançado via Shizuku, sem Root.</string>
+</resources>
