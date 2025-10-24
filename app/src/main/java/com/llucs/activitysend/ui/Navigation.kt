@@ -50,9 +50,9 @@ fun AppNavigation(
             )
         }
 
-        composable(Screen.Activities.route) {
-            val appName = it.arguments?.getString("appName") ?: ""
-            val packageName = it.arguments?.getString("packageName") ?: ""
+        composable(Screen.Activities.route) { backStackEntry ->
+            val appName = backStackEntry.arguments?.getString("appName") ?: ""
+            val packageName = backStackEntry.arguments?.getString("packageName") ?: ""
 
             ActivitiesScreen(
                 appName = appName,
