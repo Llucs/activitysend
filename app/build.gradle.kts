@@ -1,11 +1,12 @@
 plugins {
     id("com.android.application") version "8.6.0"
-    id("org.jetbrains.kotlin.android") version "1.8.21"
+    id("org.jetbrains.kotlin.android") version "1.9.25"
 }
 
 android {
     namespace = "com.llucs.activitysend"
     compileSdk = 35
+
     defaultConfig {
         applicationId = "com.llucs.activitysend"
         minSdk = 24
@@ -19,7 +20,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = "1.6.1"
     }
 
     compileOptions {
@@ -28,34 +29,44 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "17" // ou "19" se desejar
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-    // Core e utilitários
+    // Compose BOM gerencia as versões automaticamente
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
+
+    // UI principal
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Material 3 Expressive
+    implementation("androidx.compose.material3:material3")
+
+    // Animações
+    implementation("androidx.compose.animation:animation")
+
+    // Ícones
+    implementation("androidx.compose.material:material-icons-extended")
+
+    // Core e Activity
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
-    // Compose UI
-    implementation("androidx.compose.ui:ui:1.4.7")
-    implementation("androidx.compose.animation:animation:1.4.7")
-    implementation("androidx.compose.animation:animation-core:1.4.7")
-    implementation("androidx.compose.animation:animation-graphics:1.4.7")
-    implementation("androidx.compose.material3:material3:1.0.1")
-    implementation("androidx.compose.material:material-icons-extended:1.4.7")
+    // Navegação e Lifecycle
+    implementation("androidx.navigation:navigation-compose:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
 
-    // Lifecycle e navegação
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.28.0") // Atualize conforme necessário
+    // Accompanist (animações de navegação)
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.36.0")
 
-    // SplashScreen
+    // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    // Coil para imagens
-    implementation("io.coil-kt:coil-compose:2.2.2") // Compatível com Compose 1.4.7
+    // Coil (imagens)
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
     // Shizuku
     implementation("dev.rikka.shizuku:api:13.1.5")
