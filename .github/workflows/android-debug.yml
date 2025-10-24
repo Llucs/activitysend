@@ -43,7 +43,7 @@ jobs:
 
       # 6️⃣ Fazer upload do APK gerado
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ActivitySend-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
