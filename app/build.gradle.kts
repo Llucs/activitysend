@@ -34,25 +34,33 @@ android {
 }
 
 dependencies {
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    // Core e utilitários
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.compose.ui:ui:1.7.4")
-    implementation("androidx.compose.animation:animation:1.7.0")
-    implementation("androidx.compose.animation:animation-core:1.7.0")
-    implementation("androidx.compose.animation:animation-graphics:1.7.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
-    // Material 3 (Expressive já incluso)
-    implementation("androidx.compose.material3:material3:1.3.0")
-    implementation("androidx.compose.material:material-icons-extended:1.7.0")
+    // Compose UI
+    implementation("androidx.compose.ui:ui:1.5.15")
+    implementation("androidx.compose.animation:animation:1.5.15")
+    implementation("androidx.compose.animation:animation-core:1.5.15")
+    implementation("androidx.compose.animation:animation-graphics:1.5.15")
+
+    // Material 3 Expressive e ícones
+    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("androidx.compose.material:material-icons-extended:1.5.15")
+
+    // Lifecycle e navegação
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
-
-    // Shizuku
-    implementation("dev.rikka.shizuku:api:13.1.0")
-    implementation("dev.rikka.shizuku:provider:13.1.0")
-
-    // Material motion (animações)
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
     implementation("androidx.navigation:navigation-compose:2.8.0-beta02")
-}
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
 
+    // SplashScreen
+    implementation("androidx.core:core-splashscreen:1.1.1")
+
+    // Coil para imagens
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+    // Shizuku atualizado
+    implementation("dev.rikka.shizuku:api:13.2.0")
+    implementation("dev.rikka.shizuku:provider:13.2.0")
+}
