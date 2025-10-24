@@ -42,7 +42,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.36.0") {
-        exclude group: "androidx.compose.compiler", module: "compiler"
+        exclude(group = "androidx.compose.compiler", module = "compiler")
     }
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("io.coil-kt:coil-compose:2.7.0")
