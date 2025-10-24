@@ -20,7 +20,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
+        kotlinCompilerExtensionVersion = "1.5.41"
     }
 
     compileOptions {
@@ -33,6 +33,12 @@ android {
     }
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
 dependencies {
     // Core e utilitários
     implementation("androidx.core:core-ktx:1.13.1")
@@ -40,27 +46,27 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // Compose UI
-    implementation("androidx.compose.ui:ui:1.5.15")
-    implementation("androidx.compose.animation:animation:1.5.15")
-    implementation("androidx.compose.animation:animation-core:1.5.15")
-    implementation("androidx.compose.animation:animation-graphics:1.5.15")
+    implementation("androidx.compose.ui:ui:1.5.41")
+    implementation("androidx.compose.animation:animation:1.5.41")
+    implementation("androidx.compose.animation:animation-core:1.5.41")
+    implementation("androidx.compose.animation:animation-graphics:1.5.41")
 
     // Material 3 Expressive e ícones
-    implementation("androidx.compose.material3:material3:1.2.0")
-    implementation("androidx.compose.material:material-icons-extended:1.5.15")
+    implementation("androidx.compose.material3:material3:1.5.0-alpha06")
+    implementation("androidx.compose.material:material-icons-extended:1.5.41")
 
     // Lifecycle e navegação
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
-    implementation("androidx.navigation:navigation-compose:2.8.0-beta02")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
+    implementation("androidx.navigation:navigation-compose:2.9.3")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
 
-    // SplashScreen
-    implementation("androidx.core:core-splashscreen:1.1.1")
+    // SplashScreen (versão estável)
+    implementation("androidx.core:core-splashscreen:1.1.0")
 
     // Coil para imagens
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Shizuku atualizado
-    implementation("dev.rikka.shizuku:api:13.2.0")
-    implementation("dev.rikka.shizuku:provider:13.2.0")
+    // Shizuku (versões válidas)
+    implementation("dev.rikka.shizuku:api:13.1.5")
+    implementation("dev.rikka.shizuku:provider:13.1.5")
 }
