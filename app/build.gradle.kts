@@ -1,100 +1,51 @@
-name: Build Android Debug APK
+plugins {
+    id("com.android.application") version "8.6.0"
+    id("org.jetbrains.kotlin.android") version "1.9.25"
+}
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+android {
+    namespace = "com.llucs.activitysend"
+    compileSdk = 35
 
-jobs:
-  build-debug:
-    runs-on: ubuntu-latest
+    defaultConfig {
+        applicationId = "com.llucs.activitysend"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "0.1"
+    }
 
-    steps:
-      # 1️⃣ Pegar o código do repositório
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    buildFeatures {
+        compose = true
+    }
 
-      # 2️⃣ Configurar Java 17
-      - name: Setup JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
-      # 3️⃣ Configurar Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          sdk-version: '35'
-          build-tools: '35.0.0'
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
 
-      # 4️⃣ Criar/Atualizar local.properties
-      - name: Create/Update local.properties
-        run: |
-          echo "sdk.dir=${{ runner.tool_cache }}/Android/sdk" > local.properties
-          echo "Created/Updated local.properties:"
-          cat local.properties
-          if [ -d "${{ runner.tool_cache }}/Android/sdk" ]; then
-            echo "SDK found at ${{ runner.tool_cache }}/Android/sdk"
-            ls -la ${{ runner.tool_cache }}/Android/sdk
-          else
-            echo "ERROR: SDK directory not found at ${{ runner.tool_cache }}/Android/sdk!"
-            exit 1
-          fi
-          echo "ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk"
-          echo "ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk"
-        env:
-          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
-          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
-
-      # 5️⃣ Cache do Gradle
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
-      # 6️⃣ Permissão de execução para gradlew
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      # 7️⃣ Limpar cache do Gradle
-      - name: Clean Gradle cache
-        run: |
-          ./gradlew cleanBuildCache
-          rm -rf ~/.gradle/caches
-
-      # 8️⃣ Verificar dependências (debug)
-      - name: Check dependencies
-        run: ./gradlew app:dependencies > dependencies.txt
-
-      # 9️⃣ Build debug com mais memória e sem daemon
-      - name: Build APK Debug
-        run: ./gradlew clean assembleDebug --no-daemon --stacktrace
-        env:
-          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
-          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
-          ORG_GRADLE_PROJECT_org_gradle_jvmargs: "-Xmx4g -Dfile.encoding=UTF-8"
-
-      # 10️⃣ Fazer upload do relatório de dependências (se falhar)
-      - name: Upload dependencies report
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Dependencies-Report
-          path: dependencies.txt
-
-      # 11️⃣ Fazer upload do APK gerado
-      - name: Upload APK artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ActivitySend-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.animation:animation")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.navigation:navigation-compose:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.36.0") {
+        exclude group: "androidx.compose.compiler", module: "compiler"
+    }
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("dev.rikka.shizuku:api:13.1.5")
+    implementation("dev.rikka.shizuku:provider:13.1.5")
+}
