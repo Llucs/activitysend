@@ -33,12 +33,6 @@ android {
     }
 }
 
-repositories {
-    google()
-    mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-}
-
 dependencies {
     // Core e utilitários
     implementation("androidx.core:core-ktx:1.13.1")
@@ -52,7 +46,7 @@ dependencies {
     implementation("androidx.compose.animation:animation-graphics:1.5.41")
 
     // Material 3 Expressive e ícones
-    implementation("androidx.compose.material3:material3:1.5.0-alpha06")
+    implementation("androidx.compose.material3:material3:1.2.0")
     implementation("androidx.compose.material:material-icons-extended:1.5.41")
 
     // Lifecycle e navegação
@@ -66,7 +60,7 @@ dependencies {
     // Coil para imagens
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Shizuku (versões válidas)
-    implementation("dev.rikka.shizuku:api:13.1.5")
-    implementation("dev.rikka.shizuku:provider:13.1.5")
+    // Shizuku
+    implementation("dev.rikka.shizuku:api:13.2.0")
+    implementation("dev.rikka.shizuku:provider:13.2.0")
 }
