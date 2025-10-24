@@ -24,20 +24,22 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3️⃣ Configurar SDK do Android
+      # 3️⃣ Configurar Android SDK
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
         with:
           api-level: 35
           build-tools: 35.0.0
+          # Instala também plataformas e ferramentas necessárias
+          components: "platform-tools,platforms;android-35,build-tools;35.0.0"
 
-      # 4️⃣ Permissão de execução pro gradlew
+      # 4️⃣ Permissão de execução para gradlew
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 5️⃣ Build debug
+      # 5️⃣ Limpar e build debug
       - name: Build APK Debug
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew clean assembleDebug --stacktrace
 
       # 6️⃣ Fazer upload do APK gerado
       - name: Upload APK artifact
