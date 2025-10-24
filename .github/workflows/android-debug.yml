@@ -15,11 +15,36 @@ jobs:
     steps:
       # 1️⃣ Pegar o código do repositório
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Atualize para v4 (mais recente)
 
-      # 2️⃣ Cache do Gradle (evita downloads desnecessários)
+      # 2️⃣ Configurar Java 17
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4  # Atualize para v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 3️⃣ Configurar Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3  # Atualize para v3
+        with:
+          sdk-version: '35'  # Simplificado para SDK 35
+          build-tools: '35.0.0'
+
+      # 4️⃣ Criar/Atualizar local.properties
+      - name: Create/Update local.properties
+        run: |
+          echo "sdk.dir=${{ runner.tool_cache }}/Android/sdk" > local.properties
+          echo "Created/Updated local.properties:"
+          cat local.properties
+          ls -la ${{ runner.tool_cache }}/Android/sdk || echo "ERROR: SDK directory not found!"
+        env:
+          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
+          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
+
+      # 5️⃣ Cache do Gradle
       - name: Cache Gradle
-        uses: actions/cache@v3
+        uses: actions/cache@v4  # Atualize para v4
         with:
           path: |
             ~/.gradle/caches
@@ -28,33 +53,39 @@ jobs:
           restore-keys: |
             gradle-${{ runner.os }}-
 
-      # 3️⃣ Configurar Java 17
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      # 4️⃣ Configurar Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-        with:
-          api-level: 35
-          build-tools: 35.0.0
-          components: "platform-tools,platforms;android-35,build-tools;35.0.0"
-
-      # 5️⃣ Permissão de execução para gradlew
+      # 6️⃣ Permissão de execução para gradlew
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 6️⃣ Build debug com mais memória e sem daemon
+      # 7️⃣ Limpar cache do Gradle (para evitar dependências antigas)
+      - name: Clean Gradle cache
+        run: |
+          ./gradlew cleanBuildCache
+          rm -rf ~/.gradle/caches
+
+      # 8️⃣ Verificar dependências (debug)
+      - name: Check dependencies
+        run: ./gradlew app:dependencies > dependencies.txt
+
+      # 9️⃣ Build debug com mais memória e sem daemon
       - name: Build APK Debug
         run: ./gradlew clean assembleDebug --no-daemon --stacktrace
         env:
+          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
+          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
           ORG_GRADLE_PROJECT_org_gradle_jvmargs: "-Xmx4g -Dfile.encoding=UTF-8"
 
-      # 7️⃣ Fazer upload do APK gerado
+      # 10️⃣ Fazer upload do arquivo de dependências (para debug)
+      - name: Upload dependencies report
+        if: failure()  # Apenas se o build falhar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dependencies-Report
+          path: dependencies.txt
+
+      # 11️⃣ Fazer upload do APK gerado
       - name: Upload APK artifact
+        if: success()  # Apenas se o build for bem-sucedido
         uses: actions/upload-artifact@v4
         with:
           name: ActivitySend-Debug-APK
