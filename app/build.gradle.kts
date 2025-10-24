@@ -20,7 +20,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5" // Compatível com Kotlin 1.9.25
+        kotlinCompilerExtensionVersion = "1.5.6" // Atualizado para Kotlin 1.9.25
     }
 
     compileOptions {
@@ -34,9 +34,9 @@ android {
 }
 
 dependencies {
-    // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
-    
+    // Compose BOM atualizado
+    implementation(platform("androidx.compose:compose-bom:2024.11.00"))
+
     // Compose Core
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -44,27 +44,27 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.material:material-icons-extended")
-    
+
     // Forçar Compose Compiler compatível
-    implementation("androidx.compose.compiler:compiler:1.5.5")
-    
+    implementation("androidx.compose.compiler:compiler:1.5.6")
+
     // Android Core e Activity
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.activity:activity-compose:1.9.2")
-    
+    implementation("androidx.core:core-ktx:1.14.0")
+    implementation("androidx.activity:activity-compose:1.9.3")
+
     // Navigation e Lifecycle
-    implementation("androidx.navigation:navigation-compose:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
-    
+    implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
     // Accompanist
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.36.0") {
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.39.0") {
         exclude(group = "androidx.compose.compiler", module = "compiler")
     }
-    
+
     // SplashScreen e Coil
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    
+    implementation("androidx.core:core-splashscreen:1.0.2")
+    implementation("io.coil-kt:coil-compose:2.8.0")
+
     // Shizuku
     implementation("dev.rikka.shizuku:api:13.1.5")
     implementation("dev.rikka.shizuku:provider:13.1.5")
