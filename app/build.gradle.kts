@@ -55,12 +55,12 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
 
     // SplashScreen (versão estável)
-    implementation("androidx.core:core-splashscreen:1.1.0")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Coil para imagens
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    // Shizuku
-    implementation("dev.rikka.shizuku:api:13.2.0")
-    implementation("dev.rikka.shizuku:provider:13.2.0")
+    // Shizuku (versão estável)
+    implementation("dev.rikka.shizuku:api:13.1.5")
+    implementation("dev.rikka.shizuku:provider:13.1.5")
 }
