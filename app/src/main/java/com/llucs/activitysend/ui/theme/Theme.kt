@@ -12,17 +12,21 @@ import io.github.m3extensive.extensiveColorScheme
 fun ActivitySendTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val appPreferences = remember { AppPreferences(context) }
+
+    // Lê o estado do tema AMOLED
     val amoledThemeEnabled by appPreferences.amoledThemeEnabled.collectAsState(initial = false)
-    
+
+    // Escolhe o esquema de cores correto
     val colorScheme = if (amoledThemeEnabled) {
-        amoledColorScheme
+        amoledColorScheme // Seu tema AMOLED totalmente preto
     } else {
-        extensiveColorScheme()
+        extensiveColorScheme() // Material 3 Expressive padrão
     }
 
+    // Aplica o tema
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = AppTypography,
+        typography = AppTypography, // seu conjunto de tipografias
         content = content
     )
 }
