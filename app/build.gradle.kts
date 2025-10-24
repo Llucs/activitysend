@@ -35,15 +35,15 @@ android {
 
 dependencies {
     // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2024.9.+"))
+    implementation(platform("androidx.compose:compose-bom:2025.10.01"))
 
     // Compose Core
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3")           // BOM resolve versão
+    implementation("androidx.compose.material:material-icons-extended") // BOM resolve versão
     implementation("androidx.compose.animation:animation")
-    implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.compiler:compiler:1.5.+") // sempre pega último patch 1.5.x
 
     // Android Core e Activity
