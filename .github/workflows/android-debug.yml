@@ -38,55 +38,5 @@ jobs:
           echo "Created/Updated local.properties:"
           cat local.properties
           ls -la ${{ runner.tool_cache }}/Android/sdk || echo "ERROR: SDK directory not found!"
-        env:
-          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
-          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
-
-      # 5️⃣ Cache do Gradle
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
-      # 6️⃣ Permissão de execução para gradlew
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      # 7️⃣ Limpar cache do Gradle
-      - name: Clean Gradle cache
-        run: |
-          ./gradlew cleanBuildCache
-          rm -rf ~/.gradle/caches
-
-      # 8️⃣ Verificar dependências (debug)
-      - name: Check dependencies
-        run: ./gradlew app:dependencies > dependencies.txt
-
-      # 9️⃣ Build debug com mais memória e sem daemon
-      - name: Build APK Debug
-        run: ./gradlew clean assembleDebug --no-daemon --stacktrace
-        env:
-          ANDROID_HOME: ${{ runner.tool_cache }}/Android/sdk
-          ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/Android/sdk
-          ORG_GRADLE_PROJECT_org_gradle_jvmargs: "-Xmx4g -Dfile.encoding=UTF-8"
-
-      # 10️⃣ Fazer upload do relatório de dependências (se falhar)
-      - name: Upload dependencies report
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Dependencies-Report
-          path: dependencies.txt
-
-      # 11️⃣ Fazer upload do APK gerado
-      - name: Upload APK artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ActivitySend-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          echo "ANDROID_HOME: $ANDROID_HOME"
+          echo "ANDROID_SDK_ROOT
