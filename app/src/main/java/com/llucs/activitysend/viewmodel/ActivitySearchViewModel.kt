@@ -1,4 +1,4 @@
-package com.llucs.activitysend.ui
+package com.llucs.activitysend.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
