@@ -36,7 +36,7 @@ android {
 repositories {
     google()
     mavenCentral()
-    jitpack()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
