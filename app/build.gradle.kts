@@ -46,7 +46,7 @@ dependencies {
     implementation("androidx.compose.animation:animation-graphics:1.5.41")
 
     // Material 3 Expressive e ícones
-    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("androidx.compose.material3:material3:1.5.0-alpha06")
     implementation("androidx.compose.material:material-icons-extended:1.5.41")
 
     // Lifecycle e navegação
