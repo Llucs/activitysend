@@ -1,26 +1,16 @@
-
 package com.llucs.activitysend
 
 import android.net.Uri
 import android.os.Bundle
 import android.content.Context
-import com.llucs.activitysend.core.LocaleHelper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.llucs.activitysend.core.LocaleHelper
 import com.llucs.activitysend.core.IntentSender
 import com.llucs.activitysend.data.ActivityInfoModel
-import com.llucs.activitysend.data.AppInfoModel
 import com.llucs.activitysend.data.AppRepository
 import com.llucs.activitysend.ui.AppNavigation
 import com.llucs.activitysend.ui.theme.ActivitySendTheme
@@ -33,45 +23,39 @@ class MainActivity : ComponentActivity() {
         super.attachBaseContext(newBase?.let { LocaleHelper.onAttach(it) })
     }
 
-    
-    private var selectedFileUri: Uri? by mutableStateOf(null)
-    private var selectedActivityInfo: ActivityInfoModel? by mutableStateOf(null)
+    private var selectedFileUri by mutableStateOf<Uri?>(null)
+    private var selectedActivityInfo by mutableStateOf<ActivityInfoModel?>(null)
 
     private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
         selectedFileUri = it
     }
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             ActivitySendTheme {
-                    val navController = rememberNavController()
-                    val viewModel: AppSearchViewModel = viewModel(factory = AppSearchViewModelFactory(appRepository))
-                    val apps by viewModel.filteredApps.collectAsState()
+                val navController = rememberNavController()
 
-                    AppNavigation(
-                        navController = navController,
-                        apps = apps,
-                        viewModel = viewModel,
-                        onAppClick = { appInfo ->
-                            // No need to do anything here, navigation handles the appName
-                        },
-                        activitiesForApp = { appName ->
-                            viewModel.allApps.value.find { it.label == appName }?.activities ?: emptyList()
-                        },
+                // Substituir AppSearchViewModel por algo real ou criar depois
+                // val viewModel: AppSearchViewModel = viewModel(factory = AppSearchViewModelFactory(appRepository))
+                // val apps by viewModel.filteredApps.collectAsState()
+
+                AppNavigation(
+                    navController = navController,
+                    apps = emptyList(), // placeholder até criar ViewModel
+                    viewModel = null,   // placeholder
+                    onAppClick = { /* handle click */ },
+                    activitiesForApp = { emptyList() },
                     onActivityClick = { activityInfo ->
                         selectedActivityInfo = activityInfo
                     },
                     selectedActivity = selectedActivityInfo,
                     onPickFile = { filePickerLauncher.launch("*/*") },
-                        onSend = { // Implement send logic here
-                            // ... (Send logic remains)
-                        }
+                    onSend = {
                         selectedFileUri?.let { uri ->
                             selectedActivityInfo?.let { activity ->
-                                IntentSender.sendFileToActivity(this, uri, activity.toComponentName())
+                                IntentSender.sendFileToActivity(this@MainActivity, uri, activity.toComponentName())
                             }
                         }
                     }
@@ -80,4 +64,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
