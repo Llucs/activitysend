@@ -1,4 +1,3 @@
-
 package com.llucs.activitysend
 
 import android.content.Intent
@@ -21,7 +20,7 @@ import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Handle the splash screen transition.
+        // SplashScreen deve ser chamado antes do super.onCreate
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             installSplashScreen()
         }
@@ -29,7 +28,7 @@ class SplashActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SplashScreenContent { // Pass a lambda to navigate after delay
+            SplashScreenContent {
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 finish()
             }
@@ -43,7 +42,6 @@ fun SplashScreenContent(onTimeout: () -> Unit) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        // Your existing splash screen UI
         Image(
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = "Logo",
@@ -52,8 +50,7 @@ fun SplashScreenContent(onTimeout: () -> Unit) {
     }
 
     LaunchedEffect(Unit) {
-        delay(2000) // Simulate some loading time
+        delay(2000) // tempo do splash
         onTimeout()
     }
 }
-
