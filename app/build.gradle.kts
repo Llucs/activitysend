@@ -33,12 +33,6 @@ android {
     }
 }
 
-repositories {
-    google()
-    mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-}
-
 dependencies {
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.9.0"))
